@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: vibe-mate
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vibe-mate
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/vibe-mate
+    username: postgres
+    password: root
+  sql:
+    init:
+      mode: always
+      platform: postgres
+  ai:
+    jdbc:
+      chat:
+        memory:
+          class-name: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/vibe-mate
+          username: postgres
+          password: root
+          max-messages: 50
+    vector-store:
+      chroma:
+        initialize-schema: true
+        client:
+          port: 8000
+          host: http://localhost
+        collection-name: ai-memory
+    ollama:
+      chat:
+        model: gemma3:1b
+        options:
+          temperature: 0.7
+      embedding:
+        model: nomic-embed-text
+      base-url: http://localhost:11434
+    model:
+      image: llava
+
+server:
+  port: 8080
